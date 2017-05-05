@@ -14,9 +14,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by admin on 4/8/2017.
  */
 
+
 public class dbhelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="listDatabase";
     private static int count = 0;
+    private static String listName;
+    SQLiteDatabase db;
     public dbhelper(Context context) {
 
         super(context, DATABASE_NAME, null, 1);
@@ -31,7 +34,7 @@ public class dbhelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase database) {
 
-        database.execSQL("CREATE TABLE list ( _id INTEGER PRIMARY KEY AUTOINCREMENT, placeId TEXT, description TEXT);");
+        database.execSQL("CREATE TABLE "+listName+"( _id INTEGER PRIMARY KEY AUTOINCREMENT, placeId TEXT, description TEXT);");
 
     }
 
@@ -39,15 +42,16 @@ public class dbhelper extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS list");
+        db.execSQL("DROP TABLE IF EXISTS"+listName);
 
         onCreate(db);
 
     }
 
-    public void addlist(String placeId,String description)
+    public void addlist(String placeId,String description,String list)
 
     {
+        listName=list;
 
         ContentValues values=new ContentValues(2);
 
@@ -55,7 +59,7 @@ public class dbhelper extends SQLiteOpenHelper {
 
         values.put("description", description);
 
-        getWritableDatabase().insert("list",null, values);
+        getWritableDatabase().insert(listName,null, values);
 
         //udgvsufwev
 
@@ -64,22 +68,32 @@ public class dbhelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getList()
+    public Cursor getList(String list)
 
     {
+        listName=list;
         System.out.println("inside get of database");
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT placeId FROM list", null);
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT placeId FROM "+listName, null);
         return cursor;
 
     }
 
 
 
-    public void deleteHalt(String placeId){
+    public void deleteHalt(String placeId,String list){
        // Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM list",null);
         //String id= cursor.getString(0);
+        listName=list;
         System.out.println("inside delete" + placeId);
-        getWritableDatabase().delete("list","placeId=?",new String[]{placeId});
+        getWritableDatabase().delete(listName,"placeId=?",new String[]{placeId});
+    }
+
+    public void createlist(String list) {
+        listName=list;
+        db = getWritableDatabase();
+        String CREATE_TABLE = "CREATE TABLE "+list+" ( _id INTEGER PRIMARY KEY AUTOINCREMENT, placeId TEXT, description TEXT)";
+        db.execSQL(CREATE_TABLE);
+        db.close();
     }
 
 }

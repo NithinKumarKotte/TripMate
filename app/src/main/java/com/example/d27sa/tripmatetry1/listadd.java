@@ -1,8 +1,10 @@
 package com.example.d27sa.tripmatetry1;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -28,7 +32,9 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
 
     AutoCompleteTextView textIn,Dest;
     Button buttonAdd;
+    Button destbtn;
     LinearLayout container;
+    private EditText nameList;
     /*TextView reList, info;*/
 
 /*    private static final String[] NUMBER = new String[] {
@@ -83,6 +89,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         Dest = (AutoCompleteTextView)findViewById(R.id.dest);
         Dest.setAdapter(mPlaceArrayAdapter);
 
+        nameList = (EditText) findViewById(R.id.editText);
 
 
         /*adapter = new ArrayAdapter<String>(this,
@@ -90,7 +97,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
 
         textIn = (AutoCompleteTextView)findViewById(R.id.textin);
         textIn.setAdapter(mPlaceArrayAdapter);
-
+        //destbtn=(Button)findViewById(R.id.destbtn);
         buttonAdd = (Button)findViewById(R.id.add);
         container = (LinearLayout) findViewById(R.id.container1);
         /*reList = (TextView)findViewById(R.id.relist);
@@ -116,7 +123,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
                     public void onClick(View v) {
                         /*info.append("thisListener called:\t" + this + "\n");
                         info.append("Remove addView: " + addView + "\n\n");*/
-                        ((ScrollView)addView.getParent()).removeView(addView);
+                        ((LinearLayout)addView.getParent()).removeView(addView);
                         String result = textOut.getText()+"";
                         String newId=result.substring(0,result.indexOf(","));
                         removelist(newId);
@@ -127,6 +134,12 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
                 buttonRemove.setOnClickListener(thisListener);
                 container.addView(addView);
 
+                /*destbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        saveHalt();
+                    }
+                });*/
                 /*info.append(
                         "thisListener:\t" + thisListener + "\n"
                                 + "addView:\t" + addView + "\n\n"
@@ -158,10 +171,18 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         }
     };
 
+    public void saveDest(View view){
+        db = new dbhelper(this);
+        String mylist=nameList.getText().toString();
+        id = (String)itemnew.description;
+        db.addlist(id.substring(0,id.indexOf(",")),id,mylist);
+    }
+
     public void saveHalt(){
         db = new dbhelper(this);
+        String mylist=nameList.getText().toString();
         id = (String)itemnew.description;
-        db.addlist(id.substring(0,id.indexOf(",")),id);
+        db.addlist(id.substring(0,id.indexOf(",")),id,mylist);
     }
 
     @Override
@@ -192,9 +213,10 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
 
     public void removelist(String id){
         db=new dbhelper(this);
+        String mylist=nameList.getText().toString();
         System.out.println("inside removelist"+ id);
         //db.addlist(id.substring(0,id.indexOf(",")),id);
-        db.deleteHalt(id);
+        db.deleteHalt(id,mylist);
     }
     /*private void listAllAddView(){
         *//*reList.setText("");*//*
@@ -210,6 +232,53 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         }
     }*/
 
+    public void addmylist(View view){
+        //nameList = (EditText) findViewById(R.id.editText);
+        String mylist=nameList.getText().toString();
+        System.out.println(mylist);
+        db = new dbhelper(this);
+        //db.getWritableDatabase();
+        db.createlist(mylist);
+    }
+
+    public void displayList(View view){
+        System.out.println("hello in displayList");
+        String mylist1=nameList.getText().toString();
+        db = new dbhelper(this);
+        Cursor mylist=db.getList(nameList.getText().toString());
+        int j=0;
+        mylist.moveToFirst();
+        ArrayList<String> values=new ArrayList<>();
+        //System.out.println(mylist.);
+        // String [] from={"placeId","description"};
+        // System.out.println(mylist.getString(0));
+        ListView newList=(ListView)findViewById(R.id.List);
+        if (mylist != null) {
+            do {
+                for (int i = 0; i < mylist.getColumnCount(); i++) {
+
+                    values.add(j,mylist.getString(i));
+
+                    System.out.println("inside while "+values);
+                    Log.e( "","" + mylist.getString(i));
+                }
+                j++;
+            }while (mylist.moveToNext());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
+        System.out.println("outside while "+values);
+
+        // Assign adapter to ListView
+        newList.setAdapter(adapter);
+/*        System.out.println("inside display");
+        int[] to = { android.R.id.text1, android.R.id.text2};
+        ListAdapter adapter= new SimpleCursorAdapter(this,android.R.layout.simple_list_item_2,mylist,from,to);
+
+
+        newList.setAdapter(adapter);*/
+    }
 
 
 }
