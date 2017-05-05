@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -21,9 +22,11 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import java.util.ArrayList;
+
 public class listadd extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
-    AutoCompleteTextView textIn;
+    AutoCompleteTextView textIn,Dest;
     Button buttonAdd;
     LinearLayout container;
     /*TextView reList, info;*/
@@ -36,11 +39,13 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
 
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final String LOG_TAG = "listadd";
-    private AutoCompleteTextView mAutocompleteTextView;
+    private AutoCompleteTextView mAutocompleteTextView,mAutocompleteTextViewdestination;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
     private dbhelper db;
+    Button buttonRemove;
     String id;
+    public ArrayList <String> itemnew1=new ArrayList<>();
     private PlaceArrayAdapter.PlaceAutocomplete itemnew;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
@@ -54,6 +59,19 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
                 .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
                 .addConnectionCallbacks(this)
                 .build();
+
+        mAutocompleteTextViewdestination = (AutoCompleteTextView) findViewById(R.id
+                .dest);
+        mAutocompleteTextViewdestination.setThreshold(5);
+
+        mAutocompleteTextViewdestination.setOnItemClickListener(mAutocompleteClickListener);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
+                BOUNDS_MOUNTAIN_VIEW, null);
+        mAutocompleteTextViewdestination.setAdapter(mPlaceArrayAdapter);
+
+
+
+
         mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id
                 .textin);
         mAutocompleteTextView.setThreshold(5);
@@ -62,6 +80,9 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1,
                 BOUNDS_MOUNTAIN_VIEW, null);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
+        Dest = (AutoCompleteTextView)findViewById(R.id.dest);
+        Dest.setAdapter(mPlaceArrayAdapter);
+
 
 
         /*adapter = new ArrayAdapter<String>(this,
@@ -71,7 +92,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         textIn.setAdapter(mPlaceArrayAdapter);
 
         buttonAdd = (Button)findViewById(R.id.add);
-        container = (LinearLayout) findViewById(R.id.container);
+        container = (LinearLayout) findViewById(R.id.container1);
         /*reList = (TextView)findViewById(R.id.relist);
         reList.setMovementMethod(new ScrollingMovementMethod());
         info = (TextView)findViewById(R.id.info);
@@ -82,20 +103,23 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
             public void onClick(View v) {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View addView = layoutInflater.inflate(R.layout.row, null);
-                AutoCompleteTextView textOut = (AutoCompleteTextView)addView.findViewById(R.id.textout);
+                final ScrollView addView = (ScrollView)layoutInflater.inflate(R.layout.row, null);
+                final AutoCompleteTextView textOut = (AutoCompleteTextView)addView.findViewById(R.id.textout);
                 textOut.setAdapter(mPlaceArrayAdapter);
                 textOut.setText(textIn.getText().toString());
                 saveHalt();
-                Button buttonRemove = (Button)addView.findViewById(R.id.remove);
+                textIn.setText("");
+                buttonRemove = (Button)addView.findViewById(R.id.remove);
 
                 final View.OnClickListener thisListener = new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         /*info.append("thisListener called:\t" + this + "\n");
                         info.append("Remove addView: " + addView + "\n\n");*/
-                        ((LinearLayout)addView.getParent()).removeView(addView);
-
+                        ((ScrollView)addView.getParent()).removeView(addView);
+                        String result = textOut.getText()+"";
+                        String newId=result.substring(0,result.indexOf(","));
+                        removelist(newId);
                         /*listAllAddView();*/
                     }
                 };
@@ -113,6 +137,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         });
     }
 
+
     private AdapterView.OnItemClickListener mAutocompleteClickListener
             = new AdapterView.OnItemClickListener() {
         @Override
@@ -120,6 +145,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
             System.out.println("inside onCreate "+mGoogleApiClient);
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
             itemnew=item;
+            //itemnew1.add((String) itemnew.placeId);
             final String placeId = String.valueOf(item.placeId);
             Log.i(LOG_TAG, "Selected: " + item.description);
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
@@ -164,6 +190,12 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
     }
 
 
+    public void removelist(String id){
+        db=new dbhelper(this);
+        System.out.println("inside removelist"+ id);
+        //db.addlist(id.substring(0,id.indexOf(",")),id);
+        db.deleteHalt(id);
+    }
     /*private void listAllAddView(){
         *//*reList.setText("");*//*
 
@@ -177,5 +209,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
             reList.append("= " + childTextViewValue + "\n");
         }
     }*/
+
+
 
 }

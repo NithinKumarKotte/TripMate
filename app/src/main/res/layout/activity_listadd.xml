@@ -16,22 +16,41 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter List Name"
+                    />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="List Name"
-                android:id="@+id/butta"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="95dp"
-                />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save List Name"
+                    android:id="@+id/butt"
+                    android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Destination"
+                android:layout_alignParentRight="true"
+                android:id="@+id/destbtn"/>
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Destination Address"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/destbtn"
+                android:id="@+id/dest"
+                />
+        </RelativeLayout>
+
+          <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -50,11 +69,20 @@
                 android:layout_toLeftOf="@id/add" />
         </RelativeLayout>
 
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/container2"
+            android:orientation="vertical"
+            android:fillViewport="false"
+            android:weightSum="2">
         <LinearLayout
-            android:id="@+id/container"
+            android:id="@+id/container1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"
+            ></LinearLayout>
+        </ScrollView>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -68,11 +96,15 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Save"/>
+                    android:text="Save"
+                    android:id="@+id/savebtn"/>
+                    <!--android:onClick="savelist"-->
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start"/>
+                    android:text="Start"
+                    android:id="@+id/startbtn"/>
+                    <!--android:onClick="startlist"-->
 
             </LinearLayout>
 

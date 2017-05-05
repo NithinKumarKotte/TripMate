@@ -57,6 +57,8 @@ public class dbhelper extends SQLiteOpenHelper {
 
         getWritableDatabase().insert("list",null, values);
 
+        //udgvsufwev
+
         System.out.println(placeId);
         System.out.println(description);
 
@@ -70,4 +72,14 @@ public class dbhelper extends SQLiteOpenHelper {
         return cursor;
 
     }
+
+
+
+    public void deleteHalt(String placeId){
+       // Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM list",null);
+        //String id= cursor.getString(0);
+        System.out.println("inside delete" + placeId);
+        getWritableDatabase().delete("list","placeId=?",new String[]{placeId});
+    }
+
 }
