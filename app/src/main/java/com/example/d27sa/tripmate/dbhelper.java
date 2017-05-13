@@ -73,7 +73,7 @@ public class dbhelper extends SQLiteOpenHelper {
     {
         listName=list;
         System.out.println("inside get of database");
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT placeId FROM "+listName, null);
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT description FROM "+listName, null);
         return cursor;
 
     }

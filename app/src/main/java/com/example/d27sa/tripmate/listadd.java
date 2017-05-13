@@ -270,6 +270,9 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
 
         System.out.println("outside while "+values);
+        Intent myintent= new Intent(this,MapsActivity.class);
+        myintent.putExtra("note",values);
+        startActivity(myintent);
 
         // Assign adapter to ListView
         newList.setAdapter(adapter);
@@ -287,6 +290,41 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         myintent.putExtra("halts",values);
         setResult(RESULT_OK, myintent);
         finish();
+
+    }
+
+    public void showlist(View view){
+        System.out.println("hello in showList");
+        String mylist1=nameList.getText().toString();
+        db = new dbhelper(this);
+        Cursor mylist=db.getList(nameList.getText().toString());
+        int j=0;
+        mylist.moveToFirst();
+        values=new ArrayList<>();
+        //System.out.println(mylist.);
+        // String [] from={"placeId","description"};
+        // System.out.println(mylist.getString(0));
+        ListView newList=(ListView)findViewById(R.id.List);
+        if (mylist != null) {
+            do {
+                for (int i = 0; i < mylist.getColumnCount(); i++) {
+
+                    values.add(j,mylist.getString(i));
+
+                    System.out.println("inside while "+values);
+                    Log.e( "","" + mylist.getString(i));
+                }
+                j++;
+            }while (mylist.moveToNext());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
+        System.out.println("outside while "+values);
+
+        // Assign adapter to ListView
+        newList.setAdapter(adapter);
+
 
     }
 

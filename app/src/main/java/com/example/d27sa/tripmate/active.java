@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,15 +31,17 @@ public class active extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       // listView=(ListView)getView().findViewById(R.id.activelist);
+
         View rootView = inflater.inflate(R.layout.activetab, container, false);
+
         return rootView;
 
 
     }
-
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        listView=(ListView)getView().findViewById(R.id.activelist);
         if (requestCode == 1) {
             if(resultCode == RESULT_OK) {
                 value = data.getStringExtra("list");
@@ -58,8 +62,8 @@ public class active extends Fragment {
                 }
                 count++;
                 mycheck.add(mycheckBox);
-             //   ArrayAdapter<CheckBox> adapter = new ArrayAdapter<CheckBox>(this, android.R.layout.simple_selectable_list_item);
-                //listView.setAdapter(adapter);
+                ArrayAdapter<CheckBox> adapter = new ArrayAdapter<CheckBox>(getContext(), android.R.layout.simple_selectable_list_item);
+                listView.setAdapter(adapter);
 
             }
         }
