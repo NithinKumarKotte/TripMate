@@ -62,7 +62,7 @@ public class active extends Fragment {
                 }
                 count++;
                 mycheck.add(mycheckBox);
-                ArrayAdapter<CheckBox> adapter = new ArrayAdapter<CheckBox>(getContext(), android.R.layout.simple_selectable_list_item);
+                ArrayAdapter<CheckBox> adapter = new ArrayAdapter<CheckBox>(getContext(), android.R.layout.simple_selectable_list_item,android.R.id.text1, mycheck);
                 listView.setAdapter(adapter);
 
             }
