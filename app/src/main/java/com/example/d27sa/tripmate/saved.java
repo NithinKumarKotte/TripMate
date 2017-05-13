@@ -1,4 +1,4 @@
-package com.example.d27sa.tripmatetry1;
+package com.example.d27sa.tripmate;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
