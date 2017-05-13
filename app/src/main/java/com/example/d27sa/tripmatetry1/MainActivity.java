@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     public void gotoaddlist (View view)
     {
         Intent i = new Intent (this,listadd.class);
-        startActivity(i);
+        startActivityForResult(i, 1);
     }
 
 

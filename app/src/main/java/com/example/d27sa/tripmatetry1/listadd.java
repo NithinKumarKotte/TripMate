@@ -1,6 +1,7 @@
 package com.example.d27sa.tripmatetry1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
     Button destbtn;
     LinearLayout container;
     private EditText nameList;
+    ArrayList<String> values;
     /*TextView reList, info;*/
 
 /*    private static final String[] NUMBER = new String[] {
@@ -248,7 +250,7 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
         Cursor mylist=db.getList(nameList.getText().toString());
         int j=0;
         mylist.moveToFirst();
-        ArrayList<String> values=new ArrayList<>();
+        values=new ArrayList<>();
         //System.out.println(mylist.);
         // String [] from={"placeId","description"};
         // System.out.println(mylist.getString(0));
@@ -278,6 +280,15 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
 
 
         newList.setAdapter(adapter);*/
+    }
+
+    public  void movetosave(View view){
+        Intent myintent= new Intent(this,active.class);
+        myintent.putExtra("list",nameList.getText().toString());
+        myintent.putExtra("halts",values);
+        setResult(RESULT_OK, myintent);
+        finish();
+
     }
 
 
