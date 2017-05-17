@@ -10,24 +10,78 @@
     tools:context="com.example.d27sa.tripmate.MainActivity">
 
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/section_label_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:id="@+id/activelist1">
+
+    </ListView>
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="List Name To Remove"
+        android:layout_below="@id/activelist1"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button"
         android:text="Remove"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:background="@android:color/transparent"
+        android:onClick="deletetable"
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/activelist">
+        android:layout_toRightOf="@id/editText2"
+        android:layout_below="@id/activelist1"/>
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="List Name to Start"
+        android:layout_below="@id/editText2"/>
 
-    </ListView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/startbutton"
+        android:text="Start"
+        android:background="@android:color/transparent"
+
+
+        android:layout_toRightOf="@id/editText3"
+        android:layout_below="@id/editText2"/>
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Listname for Details"
+        android:layout_below="@id/editText3"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/actosav"
+        android:text="More Details"
+        android:background="@android:color/transparent"
+
+
+        android:layout_toRightOf="@id/editText4"
+        android:layout_below="@id/editText3"/>
+
 
 </RelativeLayout>

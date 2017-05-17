@@ -10,11 +10,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -30,16 +35,32 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    Intent i;
+    String list;
+    Bundle bundle;
+    int count;
+    active tab1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //setTheme(R.style.splashScreenTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
+        System.out.println("bundle"+bundle);
+        System.out.println("bundle"+getIntent());
+
+        if(getIntent().getStringExtra("list")!=null) {
+            list = (String)getIntent().getStringExtra("list");
+            count++;
+            System.out.println("bundleinside "+list);
+        }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -88,9 +109,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void gotoaddlist (View view)
     {
-        Intent i = new Intent (this,listadd.class);
-        startActivityForResult(i, 1);
+        i = new Intent (this,listadd.class);
+        startActivityForResult(i,1);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        Log.v("active", "save instance");
+        savedInstanceState.putAll(savedInstanceState);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 
 
     /**
@@ -107,9 +137,21 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             //Returning current tabs
             switch (position) {
-                case 0:
-                    active tab1 = new active();
+                case 0:active tab1 = new active();
+                    if(count==0) {
+                    System.out.println("inside active of main");
+                    count++;
                     return tab1;
+                     }else {
+                    if (getIntent() != null) {
+                        System.out.println("inside active of if of active");
+                        bundle = new Bundle();
+                        bundle.putString("list", list);
+                        tab1.setArguments(bundle);
+                        count++;
+                        return tab1;
+                    }
+                }
                 case 1:
                     saved tab2 = new saved();
                     return tab2;
@@ -117,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     return null;
             }
         }
+
 
         @Override
         public int getCount() {
@@ -128,9 +171,9 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Active";
+                    return "Lists";
                 case 1:
-                    return "Saved";
+                    return "Details";
             }
             return null;
         }

@@ -17,7 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="Remove"
+        android:text="-"
+        android:background="#e91e63"
+        android:textSize="25dp"
         />
     <AutoCompleteTextView
         android:id="@+id/textout"

@@ -48,6 +48,12 @@ public class dbhelper extends SQLiteOpenHelper {
 
     }
 
+    public void deletelist(String list){
+        listName=list;
+        System.out.println("inside dbheper in deletelist"+listName);
+        getWritableDatabase().execSQL("DROP TABLE IF EXISTS '"+listName+"'");
+    }
+
     public void addlist(String placeId,String description,String list)
 
     {
@@ -61,7 +67,7 @@ public class dbhelper extends SQLiteOpenHelper {
 
         getWritableDatabase().insert(listName,null, values);
 
-        //udgvsufwev
+
 
         System.out.println(placeId);
         System.out.println(description);
@@ -74,6 +80,16 @@ public class dbhelper extends SQLiteOpenHelper {
         listName=list;
         System.out.println("inside get of database");
         Cursor cursor = getReadableDatabase().rawQuery("SELECT description FROM "+listName, null);
+        return cursor;
+
+    }
+
+    public Cursor getListname()
+
+    {
+        System.out.println("getting database values");
+       // Cursor cursor = getReadableDatabase().rawQuery("SELECT "+listName+" FROM "+DATABASE_NAME+" WHERE type = 'TABLE'", null);
+        Cursor cursor = getReadableDatabase().rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE 'android_metadata'",null);
         return cursor;
 
     }

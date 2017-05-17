@@ -16,44 +16,47 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter List Name"
-                    android:id="@+id/editText"
-                    />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Save List Name"
-                    android:id="@+id/butt"
-                    android:layout_alignParentRight="true"
-                    android:onClick="addmylist"/>
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter List Name" />
+
+            <Button
+                android:id="@+id/butt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:onClick="addmylist"
+                android:text="Save List Name" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
+                android:id="@+id/destbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Destination"
                 android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
                 android:onClick="saveDest"
-                android:id="@+id/destbtn"/>
+                android:text="Add Destination" />
+
             <AutoCompleteTextView
+                android:id="@+id/dest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Destination Address"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/destbtn"
-                android:id="@+id/dest"
-                />
+                android:hint="Enter Destination " />
         </RelativeLayout>
 
-          <RelativeLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -62,7 +65,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="Add" />
+                android:background="#26c6da"
+                android:text="+"
+                android:textSize="25dp" />
 
             <AutoCompleteTextView
                 android:id="@+id/textin"
@@ -71,27 +76,28 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/add" />
         </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            >
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:id="@+id/container2"
-            android:orientation="vertical"
-            android:fillViewport="false"
-            android:layout_height="150dp"
-            android:weightSum="2">
         <LinearLayout
-            android:id="@+id/container1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            ></LinearLayout>
-        </ScrollView>
+            android:layout_height="150dp"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:id="@+id/container2"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:fillViewport="false"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/container1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"></LinearLayout>
+            </ScrollView>
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -102,31 +108,34 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Save"
                     android:id="@+id/savebtn"
-                    android:onClick="movetosave"/>
-                    <!--android:onClick="savelist"-->
-                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start"
+                    android:onClick="movetosave"
+                    android:text="Save"
+                    android:background="@android:color/transparent"/>
+                <!--android:onClick="savelist"-->
+                <Button
                     android:id="@+id/startbtn"
-                    android:onClick="displayList"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="displayList"
+                    android:text="Start"
+                    android:background="@android:color/transparent"/>
 
                 <Button
                     android:id="@+id/showlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Show List"
-                    android:onClick="showlist"/>
+                    android:onClick="showlist"
+                    android:text="Show List" />
                 <!--android:onClick="startlist"-->
 
             </LinearLayout>
 
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -136,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="?attr/actionBarSize"
-                android:clickable="true"/>
+                android:clickable="true" />
         </RelativeLayout>
     </LinearLayout>
 

@@ -285,11 +285,12 @@ public class listadd extends AppCompatActivity implements GoogleApiClient.OnConn
     }
 
     public  void movetosave(View view){
-        Intent myintent= new Intent(this,active.class);
+        //Bundle bundle= new Bundle();
+        Intent myintent= new Intent(this,MainActivity.class);
         myintent.putExtra("list",nameList.getText().toString());
-        myintent.putExtra("halts",values);
-        setResult(RESULT_OK, myintent);
-        finish();
+        myintent.putStringArrayListExtra("halts",values);
+        startActivityForResult(myintent,1);
+
 
     }
 
